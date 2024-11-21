@@ -1,0 +1,16 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-web
+spec:
+  # 1. 볼륨 설정
+  # 2. 용량
+  resources:
+    requests:
+      storage: 10Gi  # Corrected here: changed 'strategy' to 'storage'
+  # 3. 스토리지 클래스
+  storageClassName: manual
+  # 4. 접근 모드
+  accessModes:
+    - ReadWriteMany

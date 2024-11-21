@@ -1,0 +1,29 @@
+#################################
+# Sidecar 패턴(Sidecar Pattern)
+#################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidecar
+spec:
+  # 로그 공유 볼륨 선언
+  volumes:
+  - name: sharedlogs 
+    emptyDir: {}
+  containers:
+  # 앱 컨테이너 - 5초에 한번식 /var/log/app.log 파일에 로그 남김 
+  - name: app-container
+    image: alpine
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do date >> /var/log/app.log; sleep 5; done"]
+    volumeMounts:
+    - name: sharedlogs
+      mountPath: /var/log
+  # 사이드카 컨테이너 - 공유된 볼륨의 내용을 웹에서 확인
+  - name: sidecar-container
+    image: nginx:1.14
+    ports:
+      - containerPort: 80
+    volumeMounts:
+    - name: sharedlogs
+      mountPath: /usr/share/nginx/html

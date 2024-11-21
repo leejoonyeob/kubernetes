@@ -1,0 +1,29 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: genid-stone
+spec:
+  containers:
+  - name: fakeid
+    image: smlinux/genid:env
+    env:
+    - name: INTERVAL
+      valueFrom:
+        configMapKeyRef:
+          name: test-config
+          key: INTERVAL
+    volumeMounts:
+    - name: html
+      mountPath: /webdata
+  - name: web-server
+    image: nginx:1.14
+    
+    volumeMounts: 
+    - name: html
+      mountPath: /usr/share/nginx/html
+      readOnly: true
+    ports:
+    - containerPort: 80
+  volumes:
+  - name: html
+    emptyDir: {}

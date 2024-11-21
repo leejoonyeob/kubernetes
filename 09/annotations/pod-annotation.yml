@@ -1,0 +1,15 @@
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-annotation
+  annotations:
+    builder: "LJY(wnsduq0301@naver.com)"
+    buildDate: "20241118"
+    imageRegistry: "https://hub.docker.com"
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx:1.14
+    ports:
+    - containerPort: 80

@@ -1,0 +1,23 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: green-deploy
+spec:
+  selector:
+    matchLabels:
+      app: web
+      version: green
+  replicas: 3
+  template:
+    metadata:
+      name: green-pod
+      labels:
+        app: web
+        version: green
+    spec:
+      containers:
+      - name: green-container
+        image: whatwant/node-web:3.0
+        ports:
+        - containerPort: 8080
+

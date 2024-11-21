@@ -1,0 +1,28 @@
+---
+kind: Ingress 
+apiVersion: networking.k8s.io/v1 
+metadata:
+  name: homepay-ingress
+  namespace: testns
+  # namespace: default
+  # annottations:
+    # ingressclass.kubernetes.io/is 
+spec:
+  ingressClassName: nginx     	# anonotations 관련 정보가 deprecated 되어서 대신 설정한다.
+  rules:                      	# kubectl get ingressclass -> nginx
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: home-service
+            port:
+              number: 80
+      - path: /pay
+        pathType: Prefix
+        backend:
+          service: 
+            name: pay-service
+            port:
+              number: 80

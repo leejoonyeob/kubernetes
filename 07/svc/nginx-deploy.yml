@@ -1,0 +1,21 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: webapp-nginx-deploy
+spec: 
+  replicas: 3
+  selector:
+    matchLabels: 
+      app: webapp 
+  template: 
+    metadata: 
+      name: nginx-pod 
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: mginx-container
+        image: nginx:1.14
+        ports:
+        - containerPort: 80
